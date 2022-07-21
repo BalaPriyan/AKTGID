@@ -6,7 +6,7 @@ import aiohttp_jinja2
 from aiohttp import web
 from telethon.tl import types, custom
 
-from app.config import results_per_page, block_downloads
+from app.config import results_per_page, block_downloads, SHORT_URL
 from app.util import get_file_name, get_human_size
 from .base import BaseView
 
@@ -17,6 +17,7 @@ log = logging.getLogger(__name__)
 class IndexView(BaseView):
     @aiohttp_jinja2.template("index.html")
     async def index(self, req: web.Request) -> web.Response:
+        # print(req.host)
         alias_id = req.match_info["chat"]
         chat = self.chat_ids[alias_id]
         log_msg = ""
@@ -67,8 +68,10 @@ class IndexView(BaseView):
                     insight=insight,
                     human_size=get_human_size(m.file.size),
                     url=f"/{alias_id}/{m.id}/view",
-                    download=f"{alias_id}/{m.id}/{quote(filename)}",
+                    # download=f"{alias_id}/{m.id}/{quote(filename)}",
+                    download=await get_shortlink(f"https://{req.host}/{alias_id}/{m.id}/{quote(filename)}"),
                 )
+                # print(f"https://{req.host}/{alias_id}/{m.id}/{quote(filename)}")
             elif m.message:
                 entry = dict(
                     file_id=m.id,
@@ -112,3 +115,9 @@ class IndexView(BaseView):
             if not req.app["is_authenticated"]
             else f"{req.app['username']}:{req.app['password']}@",
         }
+
+
+async def get_shortlink(link):
+    if not SHORT_URL:
+        return link
+    return f"https://droplink.co/st?api=1aab74171e9891abd0ba799e3fd568c9598a79e1&url={link}"

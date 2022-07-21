@@ -11,3 +11,4 @@ Procfile
 .vscode/
 .gitignore
 pyproject.toml
+._*

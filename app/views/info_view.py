@@ -5,12 +5,11 @@ import aiohttp_jinja2
 from aiohttp import web
 from telethon.tl import types
 from telethon.tl.custom import Message
-from jinja2 import Markup
+from markupsafe import Markup
 
 from app.util import get_file_name, get_human_size
-from app.config import block_downloads
+from app.config import block_downloads, SHORT_URL
 from .base import BaseView
-
 
 log = logging.getLogger(__name__)
 
@@ -23,9 +22,11 @@ class InfoView(BaseView):
         chat = self.chat_ids[alias_id]
         chat_id = chat["chat_id"]
         try:
-            message = await self.client.get_messages(entity=chat_id, ids=file_id)
+            message = await self.client.get_messages(entity=chat_id,
+                                                     ids=file_id)
         except Exception:
-            log.debug(f"Error in getting message {file_id} in {chat_id}", exc_info=True)
+            log.debug(f"Error in getting message {file_id} in {chat_id}",
+                      exc_info=True)
             message = None
 
         if not message or not isinstance(message, Message):
@@ -42,16 +43,15 @@ class InfoView(BaseView):
         reply_btns = []
         if message.reply_markup:
             if isinstance(message.reply_markup, types.ReplyInlineMarkup):
-                reply_btns = [
-                    [
-                        {"url": button.url, "text": button.text}
-                        for button in button_row.buttons
-                        if isinstance(button, types.KeyboardButtonUrl)
-                    ]
-                    for button_row in message.reply_markup.rows
-                ]
+                reply_btns = [[{
+                    "url": button.url,
+                    "text": button.text
+                } for button in button_row.buttons
+                               if isinstance(button, types.KeyboardButtonUrl)]
+                              for button_row in message.reply_markup.rows]
 
-        if message.file and not isinstance(message.media, types.MessageMediaWebPage):
+        if message.file and not isinstance(message.media,
+                                           types.MessageMediaWebPage):
             file_name = get_file_name(message)
             human_file_size = get_human_size(message.file.size)
             media = {"type": message.file.mime_type}
@@ -67,44 +67,51 @@ class InfoView(BaseView):
             else:
                 caption = ""
 
-            caption_html = Markup.escape(caption).__str__().replace("\n", "<br>")
-            return_val.update(
-                {
-                    "found": True,
-                    "name": unquote(file_name),
-                    "file_id": file_id,
-                    "human_size": human_file_size,
-                    "media": media,
-                    "caption_html": caption_html,
-                    "title": f"Download | {file_name} | {human_file_size}",
-                    "reply_btns": reply_btns,
-                    "thumbnail": f"/{alias_id}/{file_id}/thumbnail",
-                    "download_url": "#"
-                    if block_downloads
-                    else f"/{alias_id}/{file_id}/{file_name}",
-                    "page_id": alias_id,
-                    "block_downloads": block_downloads,
-                }
-            )
+            caption_html = Markup.escape(caption).__str__().replace(
+                "\n", "<br>")
+                                               
+            direct_link = f"https://{req.host}/{alias_id}/{file_id}/{file_name}"
+            mx_player_link = f'intent:{direct_link}#Intent;package=com.mxtech.videoplayer.ad;S.title={file_name};end'
+                                               
+            return_val.update({
+                "found": True,
+                "name": unquote(file_name),
+                "file_id": file_id,
+                "human_size": human_file_size,
+                "media": media,
+                "caption_html": caption_html,
+                "title": f"Download | {file_name} | {human_file_size}",
+                "reply_btns": reply_btns,
+                "thumbnail": f"/{alias_id}/{file_id}/thumbnail",
+                "download_url": "#"
+                if block_downloads else await get_shortlink(f"https://{req.host}/{alias_id}/{file_id}/{file_name}"),
+                "page_id": alias_id,
+                "block_downloads": block_downloads,
+                "mx_player_link": mx_player_link
+            })
         elif message.message:
             text = message.raw_text
             text_html = Markup.escape(text).__str__().replace("\n", "<br>")
-            return_val.update(
-                {
-                    "found": True,
-                    "media": False,
-                    "text_html": text_html,
-                    "reply_btns": reply_btns,
-                    "page_id": alias_id,
-                }
-            )
+            return_val.update({
+                "found": True,
+                "media": False,
+                "text_html": text_html,
+                "reply_btns": reply_btns,
+                "page_id": alias_id,
+            })
         else:
-            return_val.update(
-                {
-                    "found": False,
-                    "reason": "Some kind of resource that I cannot display",
-                }
-            )
+            return_val.update({
+                "found":
+                False,
+                "reason":
+                "Some kind of resource that I cannot display",
+            })
 
         log.debug(f"data for {file_id} in {chat_id} returned as {return_val}")
         return return_val
+
+
+async def get_shortlink(link):
+    if not SHORT_URL:
+        return link
+    return f"https://droplink.co/st?api=1aab74171e9891abd0ba799e3fd568c9598a79e1&url={link}"
