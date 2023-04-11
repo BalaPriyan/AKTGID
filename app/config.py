@@ -43,7 +43,7 @@ except Exception:
     sys.exit(1)
 
 try:
-    session_string = "1AZWarzgBu7qodE-dSdkZL4x7uAW7H9BVz26BuWHRSvtf6zOiZgZMoaW6RDN3TVfAcBahPe5Bt5nGxMHLWWGZOdIogCtSgCNe4-lvwypHAVUYCTYzIoDwIoDUbDlDtiNPwzf-pW0OADdG76yp70MoQrvCRZRT7uJnG-wI6-QFqwbCS0W8NsxQNYJYBFQpB4y9Qt18Zf0xH6OvMwy4_7l2uQYavrFSDACQpIHYlQoyPiQRGN8X15h4QYTHxRfzgdBv3-NXa-K87rV_11mk8vKjebkhErpzUEL3hY-lrhOXR_Zb64GRbPj7_ATKS21rYsnytlwG8lOqNruTgxez8OZbpCLcT26jGwY="
+    session_string = os.environ.get("SESSION_STRING")
 except (KeyError, ValueError):
     traceback.print_exc()
     print("\n\nPlease set the SESSION_STRING environment variable correctly")
