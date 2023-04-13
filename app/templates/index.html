@@ -51,7 +51,7 @@
 
             {% if item.media %}
 
-                <a href="{{item.url}}"><img src="{{item.thumbnail}}" class="w-full rounded shadow-inner"></a>
+                <!-- <a href="{{item.url}}"><img src="{{item.thumbnail}}" class="w-full rounded shadow-inner"></a> -->
                 <div class="p-2">{{item.insight}}</div>
                 <!-- Buttons container -->
                 <span class="inline-flex mb-1 rounded shadow-inner dark:bg-green-500">                    
@@ -78,16 +78,6 @@
                                         d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
                             </a>
-
-                            <!-- One click single item playlist Download -->
-                            <button title="{{item.filename}}.m3u" onclick="singleItemPlaylist('{{item.download}}','{{item.filename}}', '{{m3u_option}}');"
-                                class="flex-1 hover:bg-blue-300 text-gray-900 font-semibold py-1 px-2 rounded items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4" />
-                                </svg>
-                            </button>
                         {% endif %}
                     {% endif %}
 

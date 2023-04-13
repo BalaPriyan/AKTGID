@@ -104,6 +104,12 @@
 
                         </div>
 
+                        <div class="text-center text-white">
+
+                            <a class="rounded p-3 bg-indigo-500 hover:bg-indigo-700 shadow-lg{% if block_downloads %} cursor-not-allowed disabled{% else %}" download="{{name}}{% endif %}" href="vlc://{{download_url}}">Play Now on VLC Player! ({{ human_size }})</a>
+
+                        </div>
+
                 
                     {% else %}
                         <div class="mx-auto flex flex-wrap justify-center w-full md:w-3/4 mt-1">
