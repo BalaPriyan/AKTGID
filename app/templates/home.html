@@ -4,23 +4,21 @@
     Available Sources
 </h1>
 
-<div class="block md:flex justify-between items-center px-4 text-center border-b-2">
-	<div class="m-2 block md:flex items-center justify-center md:justify-start text-2xl md:text-right font-bold text-gray-700">
 
-        <a href=""> Search Here </a>
-    </div>
+<div class="block md:flex justify-between items-center px-4 text-center border-b-2">
+
 
     <div class="m-2">
-        <form action="q" class="">
+        <form class="">
 
             <div class="my-4 md:my-2">
-                <div class="flex items-center rounded-full shadow dark:bg-black">
-                    <input class="rounded-l-full w-full py-1 px-6 text-gray-700 leading-tight focus:outline-none dark:text-white"
+                <div class="flex items-center rounded-full shadow dark:bg-white">
+                    <input class="rounded-l-full w-full py-1 px-6 text-gray-700 leading-tight focus:outline-none dark:text-black"
                         name="search" id="search" value="{% if search %}{{search}}{% endif %}" type="text"
-                        placeholder="Search Movie Name...">
+                        placeholder="Search">
                     <div class="p-1">
                         <button
-                            class="bg-red-500 text-white rounded-full p-2 hover:bg-red-400 focus:outline-none w-12 h-12 flex items-center justify-center">
+                            class="bg-blue-500 text-white rounded-full p-2 hover:bg-blue-400 focus:outline-none w-12 h-12 flex items-center justify-center">
                             <div><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                                     stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -35,7 +33,6 @@
     </div>
 
 </div>
-
 <div class="mx-auto my-1 p-1 w-full">
     <div class="flex flex-wrap gap-4 justify-center w-full">
         {% for chat in chats %}
