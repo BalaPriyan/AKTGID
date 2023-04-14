@@ -110,6 +110,19 @@
 
                         </div>
 
+                        <div class="text-center text-white">
+
+                            <a class="rounded p-3 bg-indigo-500 hover:bg-indigo-700 shadow-lg{% if block_downloads %} cursor-not-allowed disabled{% else %}" download="{{name}}{% endif %}" href="playit://playerv2/video?url={{download_url}}&title={{name}}">Play Now on Playit Player! ({{ human_size }})</a>
+                        </div>
+
+                        <div class="text-center text-white">
+                            <a class="rounded p-3 bg-indigo-500 hover:bg-indigo-700 shadow-lg{% if block_downloads %} cursor-not-allowed disabled{% else %}" download="{{name}}{% endif %}" href="intent:{{download_url}}#Intent;action=android.intent.action.VIEW;package=idm.internet.download.manager;end">Play Now on IDM Player! ({{ human_size }})</a>
+                        </div>
+
+                        <div class="text-center text-white">
+                            <a class="rounded p-3 bg-indigo-500 hover:bg-indigo-700 shadow-lg{% if block_downloads %} cursor-not-allowed disabled{% else %}" download="{{name}}{% endif %}" href="intent:{{download_url}}#Intent;scheme=a2z://;S.browser_fallback_url=https://play.google.com/store/apps/details?id=com.a2z.player;end">Play Now on A2Z Player! ({{ human_size }})</a>
+                        </div>
+
                 
                     {% else %}
                         <div class="mx-auto flex flex-wrap justify-center w-full md:w-3/4 mt-1">
