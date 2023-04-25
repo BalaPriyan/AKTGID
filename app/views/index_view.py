@@ -120,9 +120,11 @@ class IndexView(BaseView):
 async def get_shortlink(link):
     if not SHORT_URL:
         return link
+    
     shortzy = Shortzy(SHORTENER_API, BASE_SITE)
     try:
         link = await shortzy.convert(link)
-    except Exception:
+    except Exception as e:
+        print(e)
         link = await shortzy.convert(link, quick_link=True)
     return link

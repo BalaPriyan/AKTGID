@@ -76,3 +76,8 @@ except (KeyError, ValueError):
 SHORTENER_API = os.environ.get("SHORTENER_API", "")
 BASE_SITE = os.environ.get("BASE_SITE", "")
 SHORT_URL = bool(SHORTENER_API and BASE_SITE)
+
+print("Configurations:")
+print(f"Shortener API: {SHORTENER_API}")
+print(f"Base Site: {BASE_SITE}")
+print(f"Short URL: {SHORT_URL}")
