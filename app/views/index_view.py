@@ -68,7 +68,6 @@ class IndexView(BaseView):
                     insight=insight,
                     human_size=get_human_size(m.file.size),
                     url=f"/{alias_id}/{m.id}/view",
-                    # download=f"{alias_id}/{m.id}/{quote(filename)}",
                     download=await get_shortlink(f"https://{req.host}/{alias_id}/{m.id}/{quote(filename)}"),
                 )
                 # print(f"https://{req.host}/{alias_id}/{m.id}/{quote(filename)}")
