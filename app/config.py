@@ -72,4 +72,7 @@ except (KeyError, ValueError):
     else:
         SECRET_KEY = ""
 
-SHORT_URL = False
+
+SHORTENER_API = os.environ.get("SHORTENER_API", "")
+BASE_SITE = os.environ.get("BASE_SITE", "")
+SHORT_URL = bool(SHORTENER_API and BASE_SITE)

@@ -5,8 +5,9 @@ from urllib.parse import quote
 import aiohttp_jinja2
 from aiohttp import web
 from telethon.tl import types, custom
+from shortzy import Shortzy
 
-from app.config import results_per_page, block_downloads, SHORT_URL
+from app.config import results_per_page, block_downloads, SHORT_URL, SHORTENER_API, BASE_SITE
 from app.util import get_file_name, get_human_size
 from .base import BaseView
 
@@ -67,10 +68,9 @@ class IndexView(BaseView):
                     filename=filename,
                     insight=insight,
                     human_size=get_human_size(m.file.size),
-                    url=f"/{alias_id}/{m.id}/view",
+                    url=await get_shortlink(f"https://{req.host}/{alias_id}/{m.id}/view"),
                     download=await get_shortlink(f"https://{req.host}/{alias_id}/{m.id}/{quote(filename)}"),
                 )
-                # print(f"https://{req.host}/{alias_id}/{m.id}/{quote(filename)}")
             elif m.message:
                 entry = dict(
                     file_id=m.id,
@@ -88,7 +88,8 @@ class IndexView(BaseView):
             query = {"page": offset_val}
             if search_query:
                 query.update({"search": search_query})
-            prev_page = {"url": str(req.rel_url.with_query(query)), "no": offset_val}
+            prev_page = {"url": str(
+                req.rel_url.with_query(query)), "no": offset_val}
 
         if len(messages) == results_per_page:
             query = {"page": offset_val + 2}
@@ -119,4 +120,9 @@ class IndexView(BaseView):
 async def get_shortlink(link):
     if not SHORT_URL:
         return link
-    return f"https://droplink.co/st?api=1aab74171e9891abd0ba799e3fd568c9598a79e1&url={link}"
+    shortzy = Shortzy(SHORTENER_API, BASE_SITE)
+    try:
+        link = await shortzy.convert(link)
+    except Exception:
+        link = await shortzy.convert(link, quick_link=True)
+    return link
