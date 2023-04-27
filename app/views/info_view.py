@@ -84,7 +84,7 @@ class InfoView(BaseView):
                 "reply_btns": reply_btns,
                 "thumbnail": f"/{alias_id}/{file_id}/thumbnail",
                 "download_url": "#"
-                if block_downloads else await get_shortlink(f"https://{req.host}/{alias_id}/{file_id}/{file_name}"),
+                if block_downloads else f"https://{req.host}/{alias_id}/{file_id}/{file_name}",
                 "page_id": alias_id,
                 "block_downloads": block_downloads,
                 "mx_player_link": mx_player_link
@@ -110,8 +110,3 @@ class InfoView(BaseView):
         log.debug(f"data for {file_id} in {chat_id} returned as {return_val}")
         return return_val
 
-
-async def get_shortlink(link):
-    if not SHORT_URL:
-        return link
-    return f"https://droplink.co/st?api=1aab74171e9891abd0ba799e3fd568c9598a79e1&url={link}"
