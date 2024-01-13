@@ -71,7 +71,6 @@ class LogoView(BaseView):
             },
         )
 
-
 def textsize(text, font):
     im = Image.new(mode="P", size=(0, 0))
     draw = ImageDraw.Draw(im)
