@@ -40,7 +40,7 @@ class LogoView(BaseView):
                 im = Image.new("RGB", (W, H), color)
                 draw = ImageDraw.Draw(im)
                 font = ImageFont.truetype("arial.ttf", 50)
-                w, h = draw.textsize(chat_name, font=font)
+                w, h = textsize(chat_name, font=font)
                 draw.text(
                     ((W - w) / 2, (H - h) / 2), chat_name, fill="white", font=font
                 )
@@ -70,3 +70,10 @@ class LogoView(BaseView):
                 "Content-Disposition": 'inline; filename="logo.jpg"',
             },
         )
+
+
+def textsize(text, font):
+    im = Image.new(mode="P", size=(0, 0))
+    draw = ImageDraw.Draw(im)
+    _, _, width, height = draw.textbbox((0, 0), text=text, font=font)
+    return width, height
