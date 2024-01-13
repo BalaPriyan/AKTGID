@@ -17,7 +17,7 @@ class FaviconIconView(BaseView):
             im = Image.new("RGB", (W, H), color)
             draw = ImageDraw.Draw(im)
             font = ImageFont.truetype("arial.ttf", 100)
-            w, h = draw.textsize(text, font=font)
+            w, h = textsize(text, font=font)
             draw.text(((W - w) / 2, (H - h) / 2), text, fill="white", font=font)
             im.save(favicon_path, "JPEG")
 
@@ -32,3 +32,10 @@ class FaviconIconView(BaseView):
                 "Content-Disposition": 'inline; filename="favicon.ico"',
             },
         )
+
+
+def textsize(text, font):
+    im = Image.new(mode="P", size=(0, 0))
+    draw = ImageDraw.Draw(im)
+    _, _, width, height = draw.textbbox((0, 0), text=text, font=font)
+    return width, height
