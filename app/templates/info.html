@@ -151,61 +151,64 @@
 </marquee>
 
                 <!-- Online Video Player -> to be displayed here  -->
-    <link rel="stylesheet" href="https://cdn.fluidplayer.com/v3/current/fluidplayer.min.css" type="text/css">
+    
+  <div class="fluid-player" id="my-video"></div>
 
-<div class="fluid-player" id="my-video"></div>
-
-<script src="https://cdn.fluidplayer.com/v3/current/fluidplayer.min.js"></script>
-<script>
+  <script src="https://cdn.fluidplayer.com/v3/current/fluidplayer.min.js"></script>
+  <script>
     fluidPlayer('my-video', {
-        layoutControls: {
-            primaryColor: '#00FF00',
-        },
-        vastOptions: {
-            adList: []
-        },
-        playback: {
-            autoplay: false
-        },
-        source: '{{download_url}}'
+      layoutControls: {
+        primaryColor: '#00FF00',
+      },
+      vastOptions: {
+        adList: []
+      },
+      playback: {
+        autoplay: false
+      },
+      source: '{{download_url}}',
+      controlBar: {
+        disableDownload: true // Disable download option
+      }
     });
-</script>
+  </script>
 
-<script src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js"></script>
+  <script src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js"></script>
 
-<script>
-  const controls = [
-    'play-large',
-    'rewind',
-    'play', 
-    'fast-forward', 
-    'progress', 
-    'current-time',
-    'duration',
-    'mute',
-    'captions',
-    'settings',
-    'pip',
-    'airplay',
-    'fullscreen',
-    'chromecast'  // Add 'chromecast' control for Chromecast support
-  ];
+  <script>
+    const controls = [
+      'play-large',
+      'rewind',
+      'play', 
+      'fast-forward', 
+      'progress', 
+      'current-time',
+      'duration',
+      'mute',
+      'captions',
+      'settings',
+      'pip',
+      'airplay',
+      'fullscreen',
+      'chromecast'  // Add 'chromecast' control for Chromecast support
+    ];
 
-  const toggle = document.querySelector('.toggle'); // Corrected variable name
+    const toggle = document.querySelector('.toggle'); // Corrected variable name
 
-  // Text truncation
-  var div = document.getElementById('myDiv'); // Assuming you have an element with the ID 'myDiv'
-  var text = div.textContent;
+    // Text truncation
+    var div = document.getElementById('myDiv'); // Assuming you have an element with the ID 'myDiv'
+    var text = div.textContent;
 
-  if (text.length > 60) {
-    div.textContent = text.slice(0, 60) + "....";
-  }
-</script>
+    if (text.length > 60) {
+      div.textContent = text.slice(0, 60) + "....";
+    }
+  </script>
 
-<script src="js/wow.min.js"></script>
-<script>
-  new WOW().init();
-</script>
+  <script src="js/wow.min.js"></script>
+  <script>
+    new WOW().init();
+  </script>
+    
 	<br>
 	<!----ads----->
 			
