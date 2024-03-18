@@ -263,6 +263,22 @@
 <div class="fluid-player" id="my-video"></div>
 
 <script src="https://cdn.fluidplayer.com/v3/current/fluidplayer.min.js"></script>
+<script>
+    fluidPlayer('my-video', {
+        layoutControls: {
+            primaryColor: '#00FF00',
+            posterImage: '{{thumbnail}}'
+        },
+        vastOptions: {
+            adList: []
+        },
+        playback: {
+            autoplay: false
+        },
+        source: '{{download_url}}'
+    });
+</script>
+
 <script src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js"></script>
 
 <script>
@@ -283,24 +299,15 @@
     'chromecast'  // Add 'chromecast' control for Chromecast support
   ];
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const player = fluidPlayer('my-video', {
-      controls,
-      playbackRateControls: true, // Enable playback speed control
-      qualitySelector: {
-        defaultQuality: 0, // Set the default video quality index
-        options: [
-          { label: '720p', src: 'URL_TO_720p_VIDEO' },
-          { label: '480p', src: 'URL_TO_480p_VIDEO' },
-          // Add more quality options as needed
-        ],
-      },
-    });
-  });
+  const toggle = document.querySelector('.toggle'); // Corrected variable name
 
-  const body = document.querySelector('body');
-  const footer = document.querySelector('footer');
-  const toogle = document.querySelector('.toogle');
+  // Text truncation
+  var div = document.getElementById('myDiv'); // Assuming you have an element with the ID 'myDiv'
+  var text = div.textContent;
+
+  if (text.length > 60) {
+    div.textContent = text.slice(0, 60) + "....";
+  }
 </script>
 
 <script src="js/wow.min.js"></script>
@@ -308,14 +315,6 @@
   new WOW().init();
 </script>
 
-<script>
-  var div = document.getElementById('myDiv');
-  var text = div.textContent;
-
-  if (text.length > 60) {
-    div.textContent = text.slice(0, 60) + "....";
-  }
-</script>
 
 <!-- Disabling right click -->
 <script>
