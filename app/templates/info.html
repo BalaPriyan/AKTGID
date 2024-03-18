@@ -146,14 +146,14 @@
         <marquee behavior="scroll" direction="left" scrollamount="15">
         <div class="toogle"></div>
         <div id="file-name">
-            %s
+            {{name}}
         </div>
         </marquee>
                 <!-- Online Video Player -> to be displayed here  -->
     <div class="justify-content-center align-items-center w-100 d-flex  flex-wrap">
             <div class="lg:w-9/12 lg:px-12 lg:py-4 w-full  border border-success wow animate__animated animate__fadeInLeft">
                 <video id="player" class="player " playsinline controls>
-                    <source src="%s" type="video/mp4">
+                    <source src="{{download_url}}" type="video/mp4">
                 </video>
             </div>
    </div>
@@ -205,9 +205,9 @@
 
 				
 				<br>
-                            <div onclick="lazyDownload()" class="col-lg-4 p-2 col-12 rounded-3xl bg-warning text-black fw-bold text-center align-items-center hover:bg-gradient-to-r from-pink-500 to-violet-500 hover:shadow-md hover:shadow-gray-100 hover:translate-y-[-5px] transition transition-all duration-300 wow animate__animated animate__rubberBand">
-                                🚀 Fast Download 🚀
-                            </div>
+                            <a href="{{download_url}}" class="col-lg-4 p-2 col-12 rounded-3xl bg-warning text-black fw-bold text-center align-items-center hover:bg-gradient-to-r from-pink-500 to-violet-500 hover:shadow-md hover:shadow-gray-100 hover:translate-y-[-5px] transition transition-all duration-300 wow animate__animated animate__rubberBand">
+    🚀 Fast Download 🚀
+			    </a>
                         </div>
                 </div>
             </div>
@@ -343,43 +343,43 @@
         const  lazyLink = videolink.replace("/watch/", "/");
 
         function vlc_player() {
-            const openLazyLink = lazyLink;
+            const openLazyLink = {{download_url}};
             const openVlc = `vlc://${openLazyLink}`;
             window.location.href = openVlc;
         }
 
         function mx_player() {
-            const openLazyLink = lazyLink;
+            const openLazyLink = {{download_url}};
             const openMx = `intent:${openLazyLink}#Intent;package=com.mxtech.videoplayer.ad;end`;
             window.location.href = openMx;
         }
 
         function playit_player() {
-            const openLazyLink = lazyLink;
+            const openLazyLink = {{download_url}};
             const openPlayit = `playit://playerv2/video?url=${openLazyLink}`;
             window.location.href = openPlayit;
         }
 
         function s_player() {
-            const openLazyLink = lazyLink;
+            const openLazyLink = {{download_url}};
             const openSplayer = `intent:${openLazyLink}#Intent;action=com.young.simple.player.playback_online;package=com.young.simple.player;end`;
             window.location.href = openSplayer;
         }
 
         function km_player() {
-           const openLazyLink = lazyLink;
+           const openLazyLink = {{download_url}};
            const openKmplayer = `intent:${openLazyLink}#Intent;package=com.kmplayer;end`;
            window.location.href = openKmplayer;
         }
 
         function hd_player() {
-           const openLazyLink = lazyLink;
+           const openLazyLink = {{download_url}};
            const openHDplayer = `intent:${openLazyLink}#Intent;package=uplayer.video.player;end`;
            window.location.href = openHDplayer;
         }
 
         function lazyDownload() {
-            const openLazyLink = lazyLink;
+            const openLazyLink = {{download_url}};
             window.location.href = openLazyLink;
         }
 
