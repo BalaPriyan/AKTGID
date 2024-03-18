@@ -151,11 +151,12 @@
 </marquee>
 
                 <!-- Online Video Player -> to be displayed here  -->
-    <div id="my-video-wrapper">
-                                    <video id="my-video-player" class="mx-auto rounded" controls poster="{{thumbnail}}">
-                                        <source src="{{download_url}}" type="video/mp4" />
-                                    </video>
-                                </div>
+    <div class="justify-content-center align-items-center w-100 d-flex  flex-wrap">
+            <div class="lg:w-9/12 lg:px-12 lg:py-4 w-full  border border-success wow animate__animated animate__fadeInLeft">
+                <video id="player" class="player " playsinline controls>
+                    <source src="%s" type="video/mp4">
+                </video>
+            </div>
 	<br>
 	<!----ads----->
 			
