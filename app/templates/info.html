@@ -344,10 +344,11 @@
         const  lazyLink = videolink.replace("/watch/", "/");
 
         function vlc_player() {
-            const openLazyLink = lazyLink;
-            const openVlc = `vlc://${openLazyLink}`;
-            window.location.href = openVlc;
+    const openLazyLink = '{{download_url}}';
+    const openVlc = 'vlc://' + openLazyLink;
+    window.location.href = openVlc;
         }
+
 
         function mx_player() {
             const openLazyLink = lazyLink;
