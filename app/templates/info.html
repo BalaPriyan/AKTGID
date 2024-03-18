@@ -152,62 +152,58 @@
 
                 <!-- Online Video Player -> to be displayed here  -->
     
-  <div class="fluid-player" id="my-video"></div>
+  <div id="my-video-wrapper">
+                                    <video id="my-video-player" class="mx-auto rounded" controls poster="{{thumbnail}}">
+                                        <source src="{{download_url}}" type="video/mp4" />
+                                    </video>
+                                </div>
 
-  <script src="https://cdn.fluidplayer.com/v3/current/fluidplayer.min.js"></script>
-  <script>
-    fluidPlayer('my-video', {
-      layoutControls: {
-        primaryColor: '#00FF00',
-      },
-      vastOptions: {
-        adList: []
-      },
-      playback: {
-        autoplay: false
-      },
-      source: '{{download_url}}',
-      controlBar: {
-        disableDownload: true // Disable download option
-      }
-    });
-  </script>
+                                <script>
+                                    var video = document.querySelector("video");
+                                    var src = video.firstElementChild
 
-  <script src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js"></script>
+                                    src.addEventListener('error', function(evt) {
+                                        console.log(evt);
+                                        document.getElementById('my-video-wrapper').style.display = 'none';
+                                        document.getElementById('video-warning').style.display = 'block';
+                                    });
+                                    var myFP = fluidPlayer(
+                                        'my-video-player',{
+                                            "layoutControls": {
+                                                "autoPlay": false,
+                                                "mute": true,
+                                                "allowTheatre": true,
+                                                "playPauseAnimation": true,
+                                                "playbackRateEnabled": true,
+                                                "allowDownload": false,
+                                                "playButtonShowing": true,
+                                                "fillToContainer": true,
+                                                "posterImage": ""
+                                            }
+                                        }
+                                    );
+                                </script>
+                            {% elif media.audio %}
+                                 <div id="audio-warning" class="mx-auto p-4 bg-gray-600 text-gray-300 rounded border text-center hidden break-words">
+                                    <p> Audio {{name}} could not be played!</p>
+                                </div>
 
-  <script>
-    const controls = [
-      'play-large',
-      'rewind',
-      'play', 
-      'fast-forward', 
-      'progress', 
-      'current-time',
-      'duration',
-      'mute',
-      'captions',
-      'settings',
-      'pip',
-      'airplay',
-      'fullscreen',
-      'chromecast'  // Add 'chromecast' control for Chromecast support
-    ];
+                                <div id="my-audio-wrapper">
+                                    <img class="mx-auto rounded w-full" src="{{thumbnail}}" alt="{{name}}">
+                                    <audio class="mx-auto" controls muted>
+                                        <source src="{{download_url}}" type="audio/mpeg" />
+                                    </audio>
+                                </div>
+                                <script>
+                                    var audio = document.querySelector("audio");
+                                    var src = audio.firstElementChild
 
-    const toggle = document.querySelector('.toggle'); // Corrected variable name
-
-    // Text truncation
-    var div = document.getElementById('myDiv'); // Assuming you have an element with the ID 'myDiv'
-    var text = div.textContent;
-
-    if (text.length > 60) {
-      div.textContent = text.slice(0, 60) + "....";
-    }
-  </script>
-
-  <script src="js/wow.min.js"></script>
-  <script>
-    new WOW().init();
-  </script>
+                                    src.addEventListener('error', function(evt) {
+                                        console.log(evt);
+                                        document.getElementById('my-audio-wrapper').style.display = 'none';
+                                        document.getElementById('audio-warning').style.display = 'block';
+                                    });
+                                </script>
     
 	<br>
 	<!----ads----->
