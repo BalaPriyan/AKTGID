@@ -18,8 +18,8 @@ if not 1 <= port <= 65535:
     sys.exit(1)
 
 try:
-    api_id = 4106161
-    api_hash = "bf05f7a4f0a6ac3bc75afb4c89c44be6"
+    api_id = int(os.environ["API_ID"])
+    api_hash = os.environ["API_HASH"]
 except (KeyError, ValueError):
     traceback.print_exc()
     print("\n\nPlease set the API_ID and API_HASH environment variables correctly")
@@ -27,14 +27,7 @@ except (KeyError, ValueError):
     sys.exit(1)
 
 try:
-    index_settings_str = """{
-  "index_all": true,
-  "index_private": false,
-  "index_group": false,
-  "index_channel": true,
-  "exclude_chats": [],
-  "include_chats": []
-}""".strip()
+    index_settings_str = os.environ["INDEX_SETTINGS"].strip()
     
     index_settings = json.loads(index_settings_str)
 except Exception:
